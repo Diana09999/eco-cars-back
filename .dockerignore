@@ -1,0 +1,19 @@
+.git
+.gitignore
+
+# Laravel
+/vendor
+/node_modules
+/storage
+/bootstrap/cache
+
+# Environment
+.env
+
+# IDE
+.idea
+.vscode
+
+# OS junk
+.DS_Store
+Thumbs.db
