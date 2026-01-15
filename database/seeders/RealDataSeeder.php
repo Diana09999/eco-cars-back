@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Car;
+use App\Models\Car; // ou Vehicle selon ton modèle
 use App\Models\User;
 use App\Models\VehicleCategory;
 use Illuminate\Database\Seeder;
@@ -13,9 +13,6 @@ class RealDataSeeder extends Seeder
     public function run()
     {
         $categories = [
-            'economy' => VehicleCategory::where('name', 'economy')->first(),
-            'standard' => VehicleCategory::where('name', 'standard')->first(),
-            'business' => VehicleCategory::where('name', 'business')->first(),
             'premium' => VehicleCategory::where('name', 'premium')->first(),
         ];
 
@@ -38,7 +35,7 @@ class RealDataSeeder extends Seeder
                 'brand' => 'Hyundai',
                 'model' => 'Ioniq',
                 'year' => 2023,
-                'price_per_day' => 320.00,
+                'price_per_day' => 320,
                 'description' => 'Voiture Hybride',
                 'image' => 'https://www.automobile-propre.com/wp-content/uploads/2022/06/pour-2019-la-familiale-electrique-de-hyundai-gagne-un-petit-restylage-photo-hyundai-1573749616-1200x675.jpeg',
                 'available' => true,
@@ -47,9 +44,9 @@ class RealDataSeeder extends Seeder
             ],
             [
                 'brand' => 'BMW',
-                'model' => 'Model 3',
+                'model' => 'X5 Hybride',
                 'year' => 2019,
-                'price_per_day' => 420.00,
+                'price_per_day' => 420,
                 'description' => 'Confort avec 5 places',
                 'image' => 'https://www.largus.fr/images/images/2019-bmw-x5-hyrbide-45e-iperformance-blanc-10.jpg',
                 'available' => true,
@@ -60,7 +57,7 @@ class RealDataSeeder extends Seeder
                 'brand' => 'Audi',
                 'model' => 'e-tron GT',
                 'year' => 2024,
-                'price_per_day' => 200.00,
+                'price_per_day' => 200,
                 'description' => 'GT électrique de luxe',
                 'image' => 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800',
                 'available' => true,
@@ -70,12 +67,13 @@ class RealDataSeeder extends Seeder
         ];
 
         foreach ($realCars as $carData) {
+            // Utilise directement le modèle Car
             Car::updateOrCreate(
                 ['model' => $carData['model'], 'brand' => $carData['brand']],
                 $carData
             );
         }
 
-        $this->command->info('✅ ' . count($realCars) . ' voitures réelles ajoutées !');
+        $this->command->info('✅ ' . count($realCars) . ' voitures ajoutées !');
     }
 }
