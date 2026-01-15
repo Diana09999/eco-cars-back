@@ -37,7 +37,12 @@ class TransferSeeder extends Seeder
         ];
 
         foreach ($transfers as $transfer) {
-            Transfer::create($transfer);
+            Transfer::firstOrCreate(
+                ['from_city' => $transfer['from_city'], 'to_city' => $transfer['to_city']],
+                $transfer
+            );
         }
+
+        $this->command->info('✅ Transfers créés');
     }
 }
