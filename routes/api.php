@@ -7,6 +7,21 @@ use App\Http\Controllers\CarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/health', function () {
+    try {
+        DB::connection()->getPdo();
+        $dbStatus = 'connected';
+    } catch (\Exception $e) {
+        $dbStatus = 'disconnected: ' . $e->getMessage();
+    }
+
+    return response()->json([
+        'status' => 'ok',
+        'message' => 'API EcoCars is working!',
+        'database' => $dbStatus,
+        'timestamp' => now()->toDateTimeString()
+    ]);
+});
 
 Route::get('/user', function (Request $request) {
     return $request->user();
