@@ -22,4 +22,10 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 # Apache public folder
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
+# Copier le script de démarrage
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
 EXPOSE 80
+
+CMD ["sh", "-c", "php artisan migrate --force && php artisan config:cache && apache2-foreground"]
