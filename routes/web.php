@@ -2,18 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/seed-database/{token}', function ($token) {
-    $secretToken = env('SEED_TOKEN', 'password123');
-
-    if ($token !== $secretToken) {
-        return response()->json(['error' => 'Unauthorized'], 403);
-    }
-
-    \Artisan::call('db:seed');
-
+Route::get('/', function () {
     return response()->json([
-        'status' => 'success',
-        'message' => 'Database seeded!',
-        'output' => \Artisan::output()
+        'status' => 'OK',
+        'service' => 'eco-cars-back',
+        'message' => 'API running'
     ]);
 });
