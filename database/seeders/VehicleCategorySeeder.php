@@ -16,13 +16,6 @@ class VehicleCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        VehicleCategory::insert([
-            ['name' => 'economy', 'price_factor' => 1.0],
-            ['name' => 'standard', 'price_factor' => 1.2],
-            ['name' => 'business', 'price_factor' => 1.5],
-            ['name' => 'premium', 'price_factor' => 2.0],
-        ]);
-
        $categories = [
            ['name' => 'economy', 'price_factor' => 1.0],
            ['name' => 'standard', 'price_factor' => 1.2],
