@@ -29,14 +29,22 @@ class RealDataSeeder extends Seeder
         }
 
 
+        $adminPassword = config('app.admin_password');
+
+        if (! $adminPassword && ! app()->environment('local')) {
+            $this->command->error('❌ ADMIN_PASSWORD manquant : compte admin non créé');
+            return;
+        }
+
         $user = User::firstOrCreate(
-            ['email' => 'admin@ecocars.fr'],
+            ['email' => config('app.admin_email')],
             [
                 'name' => 'Admin Eco Cars',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make($adminPassword ?: 'password123'),
                 'email_verified_at' => now(),
             ]
         );
+        $user->forceFill(['is_admin' => true])->save();
 
         $realCars = [
             [
@@ -72,7 +80,10 @@ class RealDataSeeder extends Seeder
         ];
 
         foreach ($realCars as $carData) {
-            $user->cars()->create($carData);
+            $user->cars()->firstOrCreate(
+                ['brand' => $carData['brand'], 'model' => $carData['model']],
+                $carData
+            );
         }
 
         $this->command->info('✅ ' . count($realCars) . ' voitures réelles ajoutées !');

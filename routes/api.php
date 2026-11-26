@@ -17,15 +17,18 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 //route publiques
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 Route::get('/transfers', [\App\Http\Controllers\PublicTransferController::class, 'index']);
 
 //protected route token
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('/admin/cars', CarController::class); //seul les personnes authentifiés peuvent créer/supp les voitures
-    Route::apiResource('/admin/transfers', TransferController::class);
+
+    //seuls les administrateurs peuvent gérer les voitures et les transferts
+    Route::middleware('admin')->group(function () {
+        Route::apiResource('/admin/cars', CarController::class);
+        Route::apiResource('/admin/transfers', TransferController::class)->except('show');
+    });
 });
 
 Route::middleware('auth:sanctum')->post('/reservations', [ReservationController::class, 'store']);

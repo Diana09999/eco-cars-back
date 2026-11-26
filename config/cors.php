@@ -6,8 +6,8 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'https://alpestranfers.com',
-        'https://www.alpestranfers.com',
+        'https://alpestransfers.com',
+        'https://www.alpestransfers.com',
         'https://*.vercel.app',
         'https://eco-cars-front.onrender.com',
         'http://localhost:3000',
